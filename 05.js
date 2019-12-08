@@ -15,12 +15,7 @@ const opCoder = (data,value) => {
   let arr = [...data]
   let x=0
   while(x < arr.length){
-    console.log(`/////////////////////////////////////////////////////////////////////////////
-    intsruction:${arr[x]} at ${x} length of array:${arr.length}`)
-    console.log(`                                        pos for data for 4:${arr[x+3]}`)
-    console.log(`                                                pos for data for 3,4,5,6:${arr[x+1]}`)
     let instruction = arr[x].toString().split("").reverse()
-    console.log(instruction)
     let op, firstParam, secondParam;
     if(Number(instruction[0]) === 9 && Number(instruction[1]) === 9){
       op = 99
@@ -38,12 +33,8 @@ const opCoder = (data,value) => {
     }else{
       secondParam = arr[arr[x+2]]
     } 
-    console.log(`this is OP: ${op}  p1:${arr[x+1]}   p2:${arr[x+2]}
-    this is firstParam: ${firstParam}
-    this is secondParam: ${secondParam}`)
-
     if(op===99){
-      return arr[0]
+      return
     }else if(op===1){
       arr[arr[x+3]] = firstParam + secondParam
       x+=4
@@ -54,59 +45,43 @@ const opCoder = (data,value) => {
       arr[arr[x+1]] = value
       x+=2
     }else if(op===4){
-      console.log("                                    This is the reult for test:"+firstParam)
-      return
+      console.log("This is the reult for the test:"+firstParam)
       x+=2
-    // }else if(op === 5){
-    //   console.log(`Called op ${op}`)
-    //   if(Number(arr[x+1])){
-    //     x=secondParam
-    //   }else{
-    //     x+=4
-    //   }
-    // }else if(op === 6){
-    //   console.log(`Called op ${op}`)
-    //   if(!Number(arr[x+1])){
-    //     x=secondParam
-    //   }else{
-    //     x+=4
-    //   }
-    // }else if(op === 7){
-    //   console.log(`Called op ${op}`)
-    //   if(firstParam < secondParam){
-    //     arr[arr[x+3]] = 1
-    //     x+=4
-    //   }else{
-    //     arr[arr[x+3]] = 0
-    //     x+=4
-    //   }
-    // }else if(op === 8){
-    //   console.log(`Called op ${op}`)
-    //   if(firstParam === secondParam){
-    //     arr[arr[x+3]] = 1
-    //     x+=4
-    //   }else{
-    //     arr[arr[x+3]] = 0
-    //     x+=4
-    //   }
+    }else if(op === 5){
+      if(firstParam){
+        x=secondParam
+      }else{
+        x+=3
+      }
+    }else if(op === 6){
+      if(!firstParam){
+        x=secondParam
+      }else{
+        x+=3
+      }
+    }else if(op === 7){
+      if(firstParam < secondParam){
+        arr[arr[x+3]] = 1
+        x+=4
+      }else{
+        arr[arr[x+3]] = 0
+        x+=4
+      }
+    }else if(op === 8){
+      if(firstParam === secondParam){
+        arr[arr[x+3]] = 1
+        x+=4
+      }else{
+        arr[arr[x+3]] = 0
+        x+=4
+      }
     }else{
       // arr.forEach((x,i) => console.log(`${i} ------- ${x}`))
       return
     }
   }
-  return arr[0]
+  return
 }
 
-const decoder = (value,arr) => {
-  for(let i = 0; i < 100; i++){
-    arr[1] = i
-    for(let j = 0; j < 100; j++){
-      arr[2] = j
-      if(opCoder(arr) === value){
-        // console.log(`boi 1 :${i} boi 2:${j}`)
-      }
-    }
-  }
-}
 
-console.log(opCoder(dataArr,1))
+opCoder(dataArr,5)
