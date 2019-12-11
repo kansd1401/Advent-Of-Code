@@ -8,9 +8,11 @@ let temp2 = [3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,
 1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0]
 
 
-const opCoder = (arr,value) => {
+const opCoder = (arr,phase,value) => {
+  console.log(phase,value)
   let x=0
   let output;
+  let phased = false
     while(x < arr.length){
       let instruction = arr[x].toString().split("").reverse()
       let op, firstParam, secondParam;
@@ -39,8 +41,14 @@ const opCoder = (arr,value) => {
         arr[arr[x+3]] = firstParam * secondParam
         x+=4
       }else if(op===3){
-        arr[arr[x+1]] = value
-        x+=2
+        if(!phased){
+          arr[arr[x+1]] = phase
+          phased = true
+          x+=2
+        }else{
+          arr[arr[x+1]] = value
+          x+=2
+        }
       }else if(op===4){
         console.log("This is the reult for the test:"+firstParam)
         output = firstParam
@@ -81,18 +89,13 @@ const opCoder = (arr,value) => {
 
 
 const controller = (data,val) => {
-  let sequence= [3,2,4,1,0]
-  let amplifiers = []
+  let sequence= [4,3,2,1,0]
   let input = val;
-  for(phase in sequence){
-    amplifiers.push(opCoder([...data],phase)[0])
-  }
-  console.log(amplifiers)
-  for(amp of amplifiers){
-    let result = opCoder([...amp],input)[1]
+  for(phase of sequence){
+    let result = opCoder([...data],phase,input)[1]
     input = result
     console.log(result)
   }
   console.log(input)
 }
-controller(temp3,0)
+controller(str,0)
