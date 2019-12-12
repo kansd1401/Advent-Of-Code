@@ -188,15 +188,7 @@ const destroyerOfWorlds = (arr) => {
   for(lines of quarters.q4){
     lines = lines.reverse()
   }
-  // console.log("Q1")
-  // console.log(quarters.q1)
-  // console.log("Q2")
-  // console.log(quarters.q2)
-  // console.log("Q3")
-  // console.log(quarters.q3)
-  // console.log("Q4")
-  // console.log(quarters.q4)
-  // console.log("/////////////////////////////////////////////////")
+  
   //Thses two loops sort the lines in each each
  
   quarters.q1.sort((a,b) => {

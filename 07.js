@@ -9,7 +9,6 @@ let temp2 = [3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,
 
 
 const opCoder = (arr,phase,value) => {
-  console.log(phase,value)
   let x=0
   let output;
   let phased = false
@@ -50,7 +49,7 @@ const opCoder = (arr,phase,value) => {
           x+=2
         }
       }else if(op===4){
-        console.log("This is the reult for the test:"+firstParam)
+        console.log("This is the result for the test:"+firstParam)
         output = firstParam
         x+=2
       }else if(op === 5){
@@ -89,13 +88,41 @@ const opCoder = (arr,phase,value) => {
 
 
 const controller = (data,val) => {
-  let sequence= [4,3,2,1,0]
+  let sequence= [0,1,2,3,4]
+  let max = 0;
   let input = val;
-  for(phase of sequence){
-    let result = opCoder([...data],phase,input)[1]
-    input = result
-    console.log(result)
+  for(a of sequence){
+    for(b of sequence){
+      if(a === b){
+        continue
+      }
+      for(c of sequence){
+        if(a === c || b === c){
+          continue
+        }
+        for(d of sequence){
+          if(a === d || b === d || c === d){
+            continue
+          }
+          for(e of sequence){
+            let phases = [a,b,c,d,e]
+            if(a === e || b === e || c === e || d === e){
+              continue
+            }
+            for(phase of phases){
+              let result = opCoder([...data],phase,input)[1]
+              input = result
+            }
+            if(input > max){
+              max = input
+            }
+            input = val;
+          }
+        }
+      }
+    }
   }
-  console.log(input)
+  return max
+  
 }
-controller(str,0)
+console.log(controller(str,0))
